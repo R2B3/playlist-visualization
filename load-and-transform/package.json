@@ -1,0 +1,15 @@
+{
+  "name": "load-playlist-data",
+  "version": "1.0.0",
+  "description": "Load playlist data from Spotify and prepare for data visualization",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^2.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

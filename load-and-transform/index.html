@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Load data from spotify</title>
+
+  <script>
+    console.log("Hello World")
+
+
+    const token_url = 'https://accounts.spotify.com/api/token';
+
+    function status(response) {
+      console.log(response)
+      if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+        } else {
+          return Promise.reject(new Error(response.statusText))
+        }
+      }
+
+    function json(response) {
+      return response.json()
+    }
+
+    fetch(token_url, {
+      method: 'POST',
+      //mode: 'no-cors',
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
+        //'content-type': 'application/x-www-form-urlencoded',
+      },
+      body: 'grant_type=client_credentials',
+      // body: {
+      //   'grant_type': 'client_credentials',
+      //   'client_secret': '***REMOVED***',
+      //   'client_id': '***REMOVED***',
+      //   'code': 'code'
+      // },
+    })
+    .then(status)
+    .then(json)
+    .then(function(data) {
+
+    }).catch(function(error) {
+      console.log(error)
+    });
+
+
+
+
+
+
+    // const access_token = 'BQDfNZqGyBn1tqkY0_2MF6YuOgbvwhYTS6rvNjyGqVhd2XJ'
+    // const user_id = '***REMOVED***'
+    // const playlist_id = '***REMOVED***'
+    // const url = `https://api.spotify.com/v1/users/${user_id}/playlists/${playlist_id}`
+    // console.log(url);
+    // fetch(url, {
+    //   headers: {
+    //     'Authorization': `Bearer ${access_token}`,
+    //   }
+    // })
+    // .then(function(data) {
+    //   console.log(data);
+    // })
+    // .catch(function(error) {
+    //   console.log(error);
+    // });
+  </script>
+  </head>
+  <body />
+</html>
