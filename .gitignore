@@ -2,3 +2,5 @@
 web-api-auth-examples-master/
 
 load-and-transform/node_modules/
+
+load-and-transform/config\.js

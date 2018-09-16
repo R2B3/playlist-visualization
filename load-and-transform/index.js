@@ -1,18 +1,12 @@
-
-var fetch = require("node-fetch");
+const config = require("./config");
+const fetch = require("node-fetch");
 
 const token_url = 'https://accounts.spotify.com/api/token'
-const client_secret = '***REMOVED***'
-const client_id = '***REMOVED***'
+const client_secret = config.spotify.client_secret
+const client_id = config.spotify.client_id
 
-const user_id = '***REMOVED***';
-const playlist_ids = [
-  '***REMOVED***', // Rappig
-  '***REMOVED***', // Extra lässiges Zeugs
-  '***REMOVED***', // Gute Laune
-  '***REMOVED***', // Lässiges Zeugs
-   '***REMOVED***', // Rockig
-]
+const user_id = config.spotify.user_id
+const playlist_ids = config.spotify.playlist_ids
 
 const getAuthToken = () => {
   return fetch(token_url, {
@@ -69,6 +63,7 @@ const addTracksToPlaylistAndClean = (playlist, tracks) => {
 
 const cleanTrackObject = (item) => {
   return {
+    id: item.track.id,
     artist_name: item.track.album.artists[0].name,
     album_release_date: item.track.album.release_date,
     track_name: item.track.name,
@@ -134,18 +129,63 @@ const getPlaylistsTracks = async(token, [thisPlaylist, ...nextPlaylists], finish
   return getPlaylistsTracks(token, nextPlaylists, thisFinishedPlaylists)
 }
 
+const getAllTrackIds = (playlists) => {
+  const trackIds = []
+  playlists.map(playlist => playlist.tracks.forEach(track => trackIds.push(track.id)))
+  return trackIds
+}
+
+
+getAudioFeaturesPromise = (token, max100TrackIds) => {
+  const trackIds = max100TrackIds.join()
+  return fetch(`https://api.spotify.com/v1/audio-features?ids=${trackIds}`, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization' : `Bearer ${token}`,
+    }
+  })
+}
+
+const partitionArray = (array, size) => array.map( (e,i) => (i % size === 0) ? array.slice(i, i + size) : null ) .filter( (e) => e )
+
+const getAudioFeatures = (token, trackIds) => {
+  const chunksOf100TrackIds =  partitionArray(trackIds, 100)
+  return Promise.all(chunksOf100TrackIds.map(chunk => getAudioFeaturesPromise(token, chunk)
+    .then(status).then(json).then(data => data)))
+}
+
+
+
 const  getData = () => {
+  console.log(config)
   getAuthToken()
     .then(token => getAllPlaylists(token, user_id, playlist_ids)
           .then(playlists => {
             getPlaylistsTracks(token, playlists, [])
               .then(playlistsWithTracks => {
-                const fs = require('fs');
+
+                const fs = require('fs')
+                const trackIds = getAllTrackIds(playlistsWithTracks)
+                getAudioFeatures(token, trackIds).then(audioFeatures => {
+                  const merged = [].concat(...audioFeatures.map(x => x.audio_features))
+
+                  fs.writeFile("C:/Repository/playlist-visualization/load-and-transform/data/audioFeatures.json", JSON.stringify(merged), function(err) {
+                      if(err) {
+                          return console.log(err);
+                      }
+                      console.log("The file was saved!");
+                  });
+                })
+
                 fs.writeFile("C:/Repository/playlist-visualization/load-and-transform/data/data.json", JSON.stringify(playlistsWithTracks), function(err) {
                     if(err) {
                         return console.log(err);
                     }
                     console.log("The file was saved!");
                 });
+
+
+
               })}))}
 getData()
