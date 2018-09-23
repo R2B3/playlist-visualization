@@ -15,7 +15,7 @@ class ExplicitChart extends Component {
           dataKey='value'
           cx={50}
           cy={50}
-          startAngle={180}
+          startAngle={360}
           endAngle={0}
           innerRadius={15}
           outerRadius={30}

@@ -6,6 +6,7 @@ import YearCharts from './YearCharts'
 import ExplicitCharts from './ExplicitCharts'
 import PopularityCharts from './PopularityCharts'
 import TrackLengthCharts from './TrackLengthCharts'
+import SongCharacterCharts from './SongCharacterCharts'
 
 const boxStyle= {
    float: 'left'
@@ -45,6 +46,7 @@ class App extends Component {
         <div style={boxStyle}><PopularityCharts data={this.state.data} colors={colors} /></div>
         <div style={boxStyle}><ExplicitCharts data={this.state.data} colors={colors}  /></div>
         <div style={boxStyle}><TrackLengthCharts data={this.state.data} colors={colors}  /></div>
+        <div style={boxStyle}><SongCharacterCharts  data={this.state.data} colors={colors}  /></div>
       </div>
     );
   }

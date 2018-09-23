@@ -1,5 +1,6 @@
 const config = require("./config");
 const fetch = require("node-fetch");
+const fs = require('fs')
 
 const token_url = 'https://accounts.spotify.com/api/token'
 const client_secret = config.spotify.client_secret
@@ -155,6 +156,17 @@ const getAudioFeatures = (token, trackIds) => {
     .then(status).then(json).then(data => data)))
 }
 
+const addAudioFeaturesToPlaylist = (playlists, audioFeatures) => {
+  const audioFeatureHashTable = {}
+  audioFeatures.forEach(x => audioFeatureHashTable[x.id] = x)
+
+  playlists.forEach(playlist => {
+    playlist.tracks.forEach(track => track.audio_features = audioFeatureHashTable[track.id])
+  })
+
+  return playlists
+}
+
 
 
 const  getData = () => {
@@ -164,28 +176,15 @@ const  getData = () => {
           .then(playlists => {
             getPlaylistsTracks(token, playlists, [])
               .then(playlistsWithTracks => {
-
-                const fs = require('fs')
                 const trackIds = getAllTrackIds(playlistsWithTracks)
                 getAudioFeatures(token, trackIds).then(audioFeatures => {
-                  const merged = [].concat(...audioFeatures.map(x => x.audio_features))
+                  const audioFeaturesMerged = [].concat(...audioFeatures.map(x => x.audio_features))
+                  const playlistWithAudioFeatures = addAudioFeaturesToPlaylist(playlistsWithTracks, audioFeaturesMerged)
 
-                  fs.writeFile("C:/Repository/playlist-visualization/load-and-transform/data/audioFeatures.json", JSON.stringify(merged), function(err) {
+                  fs.writeFile("C:/Repository/playlist-visualization/load-and-transform/data/data.json", JSON.stringify(playlistWithAudioFeatures), function(err) {
                       if(err) {
                           return console.log(err);
                       }
-                      console.log("The file was saved!");
-                  });
-                })
+                      console.log("The file was saved!")})})})}))}
 
-                fs.writeFile("C:/Repository/playlist-visualization/load-and-transform/data/data.json", JSON.stringify(playlistsWithTracks), function(err) {
-                    if(err) {
-                        return console.log(err);
-                    }
-                    console.log("The file was saved!");
-                });
-
-
-
-              })}))}
 getData()
