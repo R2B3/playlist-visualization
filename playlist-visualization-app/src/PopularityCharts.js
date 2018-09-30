@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PopularityChart from './PopularityChart'
+import PopularityHeader from './PopularityHeader'
 import tinygradient from 'tinygradient'
 
 const calculateExplicitShare = (tracks) => {
@@ -41,6 +42,7 @@ class PopularityCharts extends Component {
 
     return (
       <div>
+        <PopularityHeader colors={this.props.colors} height={this.props.headerHeight} />
         {this.state.data.map((x, index) => <PopularityChart key={index} data={x.data} gradient={this.state.gradient} />)}
       </div>
     )

@@ -9,6 +9,7 @@ class ExplicitChart extends Component {
   render() {
 
     return (
+      <div style={this.props.chartBoxStyle} >
       <PieChart width={140} height={100} onMouseEnter={this.onPieEnter} margin={{top: 20, right: 20, bottom: 0, left: 20}}>
         <Pie
           data={this.props.data}
@@ -20,11 +21,12 @@ class ExplicitChart extends Component {
           innerRadius={15}
           outerRadius={30}
           paddingAngle={0}>
-            <Cell key={0} fill={this.props.colors.cold} stroke='none' />
+            <Cell key={0} fill={this.props.colors.coldDark} stroke='none' />
             <Cell key={1} fill={this.props.colors.hot} stroke='none' />
 
         </Pie>
       </PieChart>
+      </div>
     )
   }
 }

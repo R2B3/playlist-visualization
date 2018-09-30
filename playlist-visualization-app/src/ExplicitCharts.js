@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ExplicitChart from './ExplicitChart'
-
+import ExplicitHeader from './ExplicitHeader'
 
 const calculateExplicitShare = (tracks) => {
   const increment = 1 / tracks.length;
@@ -32,7 +32,8 @@ class ExplicitCharts extends Component {
 
     return (
       <div>
-        {this.state.data.map((x, index) => <ExplicitChart key={index} data={x.data} colors={this.props.colors}/>)}
+        <ExplicitHeader height={this.props.headerHeight} colors={this.props.colors}/>
+        {this.state.data.map((x, index) => <ExplicitChart key={index} data={x.data} colors={this.props.colors} chartBoxStyle={this.props.chartBoxStyle} />)}
       </div>
     )
   }

@@ -7,10 +7,19 @@ import ExplicitCharts from './ExplicitCharts'
 import PopularityCharts from './PopularityCharts'
 import TrackLengthCharts from './TrackLengthCharts'
 import SongCharacterCharts from './SongCharacterCharts'
+import PlaylistColumn from './PlaylistColumn'
 
 const boxStyle= {
    float: 'left'
 }
+
+const chartBoxStyle = {
+  height: 100
+}
+
+
+const chartAreaHeight = 100
+const headerHeight = 200
 
 const colors = {
   background: '#0F0F0F',
@@ -18,7 +27,15 @@ const colors = {
   hot: '#E55812',
   cold: '#065A82',
   lowkey: '#061A1B',
+  dynamicDarker: '#37480D',
+  hotDarker: '#542007',
+  coldDarker: '#03293C',
+  dynamicDark: '#1C2407',
+  hotDark: '#2A1004',
+  coldDark: '#021924',
+  headerFont: '#3A3A3A',
 }
+
 
 class App extends Component {
 
@@ -32,21 +49,20 @@ class App extends Component {
     };
   }
 
+  sort = (sortOrder) => {
+    console.log('sort me')
+  }
+
+
+
   render() {
     return (
       <div className="App">
-        <div style={boxStyle}>
-          <PlaylistLabel name={this.state.data[0].name} />
-          <PlaylistLabel name={this.state.data[1].name} />
-          <PlaylistLabel name={this.state.data[2].name} />
-          <PlaylistLabel name={this.state.data[3].name} />
-        </div>
-
-        <div style={boxStyle}><YearCharts data={this.state.data} colors={colors}/></div>
-        <div style={boxStyle}><PopularityCharts data={this.state.data} colors={colors} /></div>
-        <div style={boxStyle}><ExplicitCharts data={this.state.data} colors={colors}  /></div>
-        <div style={boxStyle}><TrackLengthCharts data={this.state.data} colors={colors}  /></div>
-        <div style={boxStyle}><SongCharacterCharts  data={this.state.data} colors={colors}  /></div>
+        <div style={boxStyle}><PlaylistColumn data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><YearCharts data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><PopularityCharts data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><ExplicitCharts data={this.state.data} colors={colors}  headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><SongCharacterCharts data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} /></div>
       </div>
     );
   }

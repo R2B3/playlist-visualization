@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import YearChart from './YearChart'
+import YearHeader from './YearHeader'
 
 const createPeriodArray = (period_start, period_end, period_length) => {
   const result = {}
@@ -73,6 +74,7 @@ class YearCharts extends Component {
 
     return (
       <div>
+        <YearHeader colors={this.props.colors} height={this.props.headerHeight} />
         {this.state.data ? this.state.data.map((x,index) => <YearChart key={index} data={x.periods_percent} label={x.name} colors={this.props.colors}/>) : ""}
       </div>
     )
