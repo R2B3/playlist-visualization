@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import {PieChart, Pie, Sector, Cell} from 'recharts'
-
+import { PieChart, Pie, Cell } from 'recharts'
 
 const rewriteData = (data, needleWidth) => {
   const result =
@@ -20,7 +19,6 @@ const rewriteData = (data, needleWidth) => {
       name: '',
       value: 1 -  data.max
     }]
-    console.log(result)
     return result
 }
 
@@ -46,6 +44,7 @@ const getPies = (features, data) => {
 
     return (
       <Pie
+        key={index}
         data={pieData}
         dataKey='value'
         cx={50}
@@ -65,18 +64,13 @@ const getPies = (features, data) => {
   })
 }
 
-class SongCharachterChart extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    // Range (min and max) can be visualized using the second first and second last pie. Use shade colors.*Darker
-    return (
-      <PieChart width={140} height={100} onMouseEnter={this.onPieEnter} margin={{top: 20, right: 20, bottom: 0, left: 20}}>
-        {getPies(this.props.features, this.props.data)}
-      </PieChart>
-    )
-  }
+
+const SongCharachterChart = (props) => {
+  return (
+        <PieChart width={140} height={100} margin={{top: 20, right: 20, bottom: 0, left: 20}}>
+          {getPies(props.features, props.data)}
+        </PieChart>
+      )
 }
 
-export default SongCharachterChart;
+export default SongCharachterChart

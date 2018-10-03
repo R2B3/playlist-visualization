@@ -1,17 +1,7 @@
 import React, { Component } from 'react'
 
-
-class EmptyHeader extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-
-    return (
-      <div style={{height: this.props.height}}>
-      </div>
-    )
-  }
+const EmptyHeader = (props) => {
+  return (<div style={{height: props.height}} />)
 }
 
-export default EmptyHeader;
+export default EmptyHeader

@@ -46,11 +46,17 @@ class App extends Component {
     console.log(data)
     this.state = {
       data,
+      sorted: null
     };
   }
 
-  sort = (sortOrder) => {
-    console.log('sort me')
+  sort = (sortOrder, componentId, config) => {
+    const sortedData = this.state.data.sort((a, b) => sortOrder.indexOf(a.name) > sortOrder.indexOf(b.name))
+    const sorted = {id: componentId, config}
+    this.setState({
+      data: sortedData,
+      sorted
+    })
   }
 
 
@@ -58,11 +64,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={boxStyle}><PlaylistColumn data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><YearCharts data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><PopularityCharts data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><ExplicitCharts data={this.state.data} colors={colors}  headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><SongCharacterCharts data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} /></div>
+        <div style={boxStyle}><PlaylistColumn id={0} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><YearCharts id={1} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><PopularityCharts id={2} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
+        <div style={boxStyle}><ExplicitCharts id={3} data={this.state.data} colors={colors}  headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} sorted={this.state.sorted}/></div>
+        <div style={boxStyle}><SongCharacterCharts id={4} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} /></div>
       </div>
     );
   }

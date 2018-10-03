@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {PieChart, Pie, Sector, Cell} from 'recharts'
 
-
-class ExplicitChart extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-
-    return (
-      <div style={this.props.chartBoxStyle} >
-      <PieChart width={140} height={100} onMouseEnter={this.onPieEnter} margin={{top: 20, right: 20, bottom: 0, left: 20}}>
+const ExplicitChart = (props) => {
+  return (
+    <div style={props.chartBoxStyle} >
+      <PieChart width={140} height={100}  margin={{top: 20, right: 20, bottom: 0, left: 20}}>
         <Pie
-          data={this.props.data}
+          data={props.data}
           dataKey='value'
           cx={50}
           cy={50}
@@ -21,14 +15,11 @@ class ExplicitChart extends Component {
           innerRadius={15}
           outerRadius={30}
           paddingAngle={0}>
-            <Cell key={0} fill={this.props.colors.coldDark} stroke='none' />
-            <Cell key={1} fill={this.props.colors.hot} stroke='none' />
-
+            <Cell key={0} fill={props.colors.coldDark} stroke='none' />
+            <Cell key={1} fill={props.colors.hot} stroke='none' />
         </Pie>
       </PieChart>
-      </div>
-    )
-  }
+    </div>)
 }
 
-export default ExplicitChart;
+export default ExplicitChart

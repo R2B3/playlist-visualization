@@ -2,6 +2,27 @@ import React, { Component } from 'react'
 import SongCharacterChart from './SongCharacterChart'
 import SongCharacterHeader from './SongCharacterHeader'
 
+const getFeatures = (colors) => {
+  return [{
+    name: 'danceability',
+    colorNeedle: colors.hot,
+    colorRange: colors.hotDarker,
+    colorBackground: colors.hotDark,
+  }, {
+    name: 'energy',
+    colorNeedle: colors.dynamic,
+    colorRange: colors.dynamicDarker,
+    colorBackground: colors.dynamicDark,
+  }, {
+    name: 'valence',
+    colorNeedle: colors.cold,
+    colorRange: colors.coldDarker,
+    colorBackground: colors.coldDark,
+  }]
+}
+
+const characterPerPlaylist = (data, colors) => data.map(playlist => getFeatures(colors).map(feature => calculateCharacter(playlist, feature.name)))
+
 const calculateCharacter = (playlist, audioFeatureName) => {
   const featureOnly = playlist.tracks.map(track => track.audio_features[audioFeatureName]).sort((a, b) => a - b)
   const median = (featureOnly[(featureOnly.length - 1) >> 1] + featureOnly[featureOnly.length >> 1]) / 2
@@ -16,46 +37,13 @@ const calculateCharacter = (playlist, audioFeatureName) => {
   }
 }
 
-class SongCharacterCharts extends Component {
-
-  constructor(props) {
-    super(props)
-
-    const features = [
-      {
-        name: 'danceability',
-        colorNeedle: this.props.colors.hot,
-        colorRange: this.props.colors.hotDarker,
-        colorBackground: this.props.colors.hotDark,
-      }, {
-        name: 'energy',
-        colorNeedle: this.props.colors.dynamic,
-        colorRange: this.props.colors.dynamicDarker,
-        colorBackground: this.props.colors.dynamicDark,
-      }, {
-        name: 'valence',
-        colorNeedle: this.props.colors.cold,
-        colorRange: this.props.colors.coldDarker,
-        colorBackground: this.props.colors.coldDark,
-      }]
-
-    const character_per_playlist = this.props.data.map(playlist => features.map(feature => calculateCharacter(playlist, feature.name)))
-
-    this.state = {
-      features,
-      data: character_per_playlist
-    }
-  }
-
-  render() {
-
-    return (
-      <div>
-        <SongCharacterHeader colors={this.props.colors} height={this.props.headerHeight} features={this.state.features} sort={this.props.sort}/>
-        {this.state.data.map((x, index) => <SongCharacterChart key={index} features={this.state.features} data={x} colors={this.props.colors} />)}
-      </div>
-    )
-  }
+const SongCharacterCharts = (props) => {
+  return (
+    <div>
+      <SongCharacterHeader colors={props.colors} height={props.headerHeight} features={getFeatures(props.colors)} />
+      {characterPerPlaylist(props.data, props.colors).map((x, index) => <SongCharacterChart key={index} features={getFeatures(props.colors)} data={x} colors={props.colors} />)}
+    </div>
+  )
 }
 
-export default SongCharacterCharts;
+export default SongCharacterCharts

@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
 
-
-class SongCharacterHeader extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-
-    return (
-      <div style={{height: this.props.height}}>
-        <h1 style={{color: this.props.colors.headerFont}}>Popularity</h1>
-        {this.props.features.map(feature => <h2 style={{color: feature.colorNeedle}}>{feature.name}</h2>)}
-      </div>
-    )
-  }
+const SongCharacterHeader = (props) => {
+  return (
+    <div style={{height: props.height}}>
+      <h1 style={{color: props.colors.headerFont}}>Popularity</h1>
+      {props.features.map((feature, index) => <h2 key={index} style={{color: feature.colorNeedle}}>{feature.name}</h2>)}
+    </div>
+  )
 }
 
-export default SongCharacterHeader;
+export default SongCharacterHeader
