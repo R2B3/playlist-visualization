@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import PlaylistLabel from './PlaylistLabel'
 import YearCharts from './YearCharts'
 import ExplicitCharts from './ExplicitCharts'
 import PopularityCharts from './PopularityCharts'
@@ -14,7 +13,8 @@ const boxStyle= {
 }
 
 const chartBoxStyle = {
-  height: 100
+  height: 200,
+  width: 280
 }
 
 
@@ -43,7 +43,7 @@ class App extends Component {
     super(props);
 
     const data = require('./data.json');
-    console.log(data)
+
     this.state = {
       data,
       sorted: null
@@ -57,6 +57,7 @@ class App extends Component {
       data: sortedData,
       sorted
     })
+
   }
 
 
@@ -64,11 +65,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={boxStyle}><PlaylistColumn id={0} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><YearCharts id={1} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><PopularityCharts id={2} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} /></div>
-        <div style={boxStyle}><ExplicitCharts id={3} data={this.state.data} colors={colors}  headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} sorted={this.state.sorted}/></div>
-        <div style={boxStyle}><SongCharacterCharts id={4} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} /></div>
+        <div style={boxStyle}><PlaylistColumn id={0} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle}  sort={this.sort} sorted={this.state.sorted} /></div>
+        <div style={boxStyle}><SongCharacterCharts id={4} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} sorted={this.state.sorted} /></div>
+        <div style={boxStyle}><YearCharts id={1} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle}  sort={this.sort} sorted={this.state.sorted} /></div>
+        <div style={boxStyle}><PopularityCharts id={2} data={this.state.data} colors={colors} headerHeight={headerHeight} chartBoxStyle={chartBoxStyle}  sort={this.sort} sorted={this.state.sorted} /></div>
+        <div style={boxStyle}><ExplicitCharts id={3} data={this.state.data} colors={colors}  headerHeight={headerHeight} chartBoxStyle={chartBoxStyle} sort={this.sort} sorted={this.state.sorted} /></div>
       </div>
     );
   }

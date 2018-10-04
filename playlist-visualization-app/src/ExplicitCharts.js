@@ -24,7 +24,7 @@ const prepareData = (data) => {
 const ExplicitCharts = (props) => {
   return (
     <div>
-      <ExplicitHeader data={prepareData(props.data)} height={props.headerHeight} colors={props.colors} sort={props.sort} sorted={props.sorted} id={props.id}/>
+      <ExplicitHeader data={prepareData(props.data)} height={props.headerHeight} colors={props.colors} sort={props.sort} sorted={props.sorted} id={props.id}  chartBoxStyle={props.chartBoxStyle} />
       {prepareData(props.data).map((x, index) => <ExplicitChart key={index} data={x.data} colors={props.colors} chartBoxStyle={props.chartBoxStyle} />)}
     </div>)
 }

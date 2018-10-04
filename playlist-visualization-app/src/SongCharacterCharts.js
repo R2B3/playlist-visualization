@@ -33,14 +33,15 @@ const calculateCharacter = (playlist, audioFeatureName) => {
     name: audioFeatureName,
     min,
     max,
-    median
+    median,
+    playlistName: playlist.name
   }
 }
 
 const SongCharacterCharts = (props) => {
   return (
     <div>
-      <SongCharacterHeader colors={props.colors} height={props.headerHeight} features={getFeatures(props.colors)} />
+      <SongCharacterHeader colors={props.colors} height={props.headerHeight} features={getFeatures(props.colors)} data={characterPerPlaylist(props.data, props.colors)} sort={props.sort} sorted={props.sorted} id={props.id}  chartBoxStyle={props.chartBoxStyle} />
       {characterPerPlaylist(props.data, props.colors).map((x, index) => <SongCharacterChart key={index} features={getFeatures(props.colors)} data={x} colors={props.colors} />)}
     </div>
   )

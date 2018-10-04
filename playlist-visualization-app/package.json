@@ -1,6 +1,7 @@
 {
   "name": "playlist-visualization-app",
   "version": "0.1.0",
+  "homepage": "http://r2b3.alkaid.uberspace.de/playlist-visualization",
   "private": true,
   "dependencies": {
     "react": "^16.4.2",

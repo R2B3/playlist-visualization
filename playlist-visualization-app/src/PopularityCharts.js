@@ -32,7 +32,7 @@ const prepareData = (data) => {
 const PopularityCharts = (props) => {
   return (
     <div>
-      <PopularityHeader colors={props.colors} height={props.headerHeight} />
+      <PopularityHeader colors={props.colors} height={props.headerHeight} data={props.data}  sort={props.sort} sorted={props.sorted}  id={props.id}  chartBoxStyle={props.chartBoxStyle} />
       {prepareData(props.data).map((x, index) => <PopularityChart key={index} data={x.data} gradient={getGradient(props.colors.cold, props.colors.hot)} />)}
     </div>
   )

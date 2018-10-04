@@ -63,7 +63,7 @@ const YearCharts = (props) => {
 
   return (
     <div>
-      <YearHeader colors={props.colors} height={props.headerHeight} />
+      <YearHeader colors={props.colors} height={props.headerHeight} data={props.data}  sort={props.sort} sorted={props.sorted} id={props.id}  chartBoxStyle={props.chartBoxStyle} />
       {prepareData(props.data).map((x,index) => <YearChart key={index} data={x.periods_percent} label={x.name} colors={props.colors}/>)}
     </div>)
 }

@@ -3,7 +3,7 @@ import {PieChart, Pie, Sector, Cell} from 'recharts'
 
 const ExplicitChart = (props) => {
   return (
-    <div style={props.chartBoxStyle} >
+    <div >
       <PieChart width={140} height={100}  margin={{top: 20, right: 20, bottom: 0, left: 20}}>
         <Pie
           data={props.data}

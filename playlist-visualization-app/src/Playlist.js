@@ -10,7 +10,7 @@ class Playlist extends Component {
   render() {
 
     return (
-      <div style={this.props.chartBoxStyle}>
+      <div style={{height: 90}}>
         <h1 style={{color: this.props.colors.headerFont}}>{this.props ? this.props.title : ''}</h1>
       </div>
     )
